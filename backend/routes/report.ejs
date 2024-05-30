@@ -35,7 +35,7 @@
                 <th>Price</th>
                 <th>Sub Total</th>
             </tr>
-            <% if(productDetails.lenght > 0){ %> 
+            <% if(productDetails.length > 0) { %> 
                 <% productDetails.forEach(product =>{ %>
                     <tr>
                         <td><%= product.name %></td>
@@ -44,10 +44,10 @@
                         <td><%= product.price %></td>
                         <td><%= product.total %></td>
                     </tr>
-                <%})%>
+                <%});%>
             <%}%>
         </table>
-        <h3>Total> <%= totalAmount %></h3>
+        <h3>Total <%= totalAmount %></h3>
         <h3>Thank you for visiting. Please visit again</h3>
     </body>
 </html>
