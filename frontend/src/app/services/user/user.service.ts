@@ -7,23 +7,23 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class UserService {
 
-  url = environment.apiUrl;
+  private apiUrl = environment.apiUrl;
 
-  constructor(private httpCliente: HttpClient) { }
+  constructor(private httpClient: HttpClient) {}
 
-  signup(data: any){
-    return this.httpCliente.post(`${this.url}/user/signup`, data, {
-      headers: new HttpHeaders().set('Content-Type', "application/json")
-    })
+  signup(data: any) {
+    return this.httpClient.post(`${this.apiUrl}/user/signup`, data, {
+      headers: new HttpHeaders().set('Content-Type', 'application/json')
+    });
   }
 
   login(data: any){
-    return this.httpCliente.post(`${this.url}/user/signup`, data,{
+    return this.httpClient.post(`${this.apiUrl}/user/login`, data,{
       headers: new HttpHeaders().set('Content-Type', "application/json")
     })
   }
 
   checkToken(){
-    return this.httpCliente.get(this.url + "/user/checkToken");
+    return this.httpClient.get(this.apiUrl + "/user/checkToken");
   }
 }
