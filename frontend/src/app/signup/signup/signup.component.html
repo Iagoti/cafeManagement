@@ -11,7 +11,7 @@
         <input matInput formControlName="name" required>
         <mat-error *ngIf="signupForm.controls.name.touched && signupForm.controls.name.invalid">
           <span *ngIf="signupForm.controls.name.errors.required">This field is mandatory.</span>
-          <span *ngIf="signupForm.controls.name.errors.pattern">This field is mandatory.</span>
+          <span *ngIf="signupForm.controls.name.errors.pattern">This field is invalid.</span>
         </mat-error>
       </mat-form-field>
 
@@ -20,7 +20,7 @@
         <input matInput formControlName="email" required>
         <mat-error *ngIf="signupForm.controls.email.touched && signupForm.controls.email.invalid">
           <span *ngIf="signupForm.controls.email.errors.required">This field is mandatory.</span>
-          <span *ngIf="signupForm.controls.email.errors.pattern">This field is mandatory.</span>
+          <span *ngIf="signupForm.controls.email.errors.pattern">This field is invalid.</span>
         </mat-error>
       </mat-form-field>
 
@@ -29,7 +29,7 @@
         <input matInput formControlName="contactNumber" required>
         <mat-error *ngIf="signupForm.controls.contactNumber.touched && signupForm.controls.contactNumber.invalid">
           <span *ngIf="signupForm.controls.contactNumber.errors.required">This field is mandatory.</span>
-          <span *ngIf="signupForm.controls.contactNumber.errors.pattern">This field is mandatory.</span>
+          <span *ngIf="signupForm.controls.contactNumber.errors.pattern">This field is invalid.</span>
         </mat-error>
       </mat-form-field>
 
@@ -38,7 +38,7 @@
         <input matInput formControlName="password" type="password">
         <mat-error *ngIf="signupForm.controls.password.touched && signupForm.controls.password.invalid">
           <span *ngIf="signupForm.controls.password.errors.required">This field is mandatory.</span>
-          <span *ngIf="signupForm.controls.password.errors.pattern">This field is mandatory.</span>
+          <span *ngIf="signupForm.controls.password.errors.pattern">This field is invalid.</span>
         </mat-error>
       </mat-form-field>
     </div>

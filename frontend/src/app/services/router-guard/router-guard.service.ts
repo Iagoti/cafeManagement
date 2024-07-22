@@ -17,8 +17,6 @@ export class RouterGuardService {
 
   canActivate(route: ActivatedRouteSnapshot): boolean{
     let expectedRoleArray = route.data;
-    console.log("Teste: ",expectedRoleArray)
-    console.log("Teste 2: ", expectedRoleArray.expectedRole)
     expectedRoleArray = expectedRoleArray.expectRole;
 
     const token: any = localStorage.getItem('token');
