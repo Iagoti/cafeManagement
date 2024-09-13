@@ -13,7 +13,7 @@ export class CategoryService {
 
   add(data: any){
     return this.httpClient.post(this.url + "/category/add/", data,{
-      headers: new HttpHeaders().set('Content-Type', 'aplication/json')
+      headers: new HttpHeaders().set('Content-Type', 'application/json')
     })
   }
 
