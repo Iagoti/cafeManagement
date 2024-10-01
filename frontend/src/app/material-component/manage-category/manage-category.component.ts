@@ -53,7 +53,6 @@ export class ManageCategoryComponent implements OnInit {
   }
 
   handleAddAction(){
-    debugger
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
       action: 'Add'
@@ -70,7 +69,21 @@ export class ManageCategoryComponent implements OnInit {
     )
   }
 
-  handleEditAction(value: any){
-
+  handleEditAction(values: any){
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      action: 'Edit',
+      data: values
+    }
+    dialogConfig.width = "850px";
+    const dialogRef = this.dialog.open(CategoryComponent, dialogConfig);
+    this.router.events.subscribe(() => {
+      dialogRef.close();
+    });
+    const sub = dialogRef.componentInstance.onEditCategory.subscribe(
+      (response) =>{
+        this.tableData();
+      }
+    )
   }
 }

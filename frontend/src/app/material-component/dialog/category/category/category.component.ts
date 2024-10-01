@@ -30,10 +30,11 @@ export class CategoryComponent implements OnInit {
 
   ngOnInit(): void {
     this.categoryForm = this.formBuilder.group({
-      name:[null, [Validators.required]]
+      name:["", [Validators.required]]
     });
     if(this.dialogData.action === 'Edit'){
       this.dialogAction = "Edit";
+      this.action = "Update"
       this.categoryForm.patchValue(this.dialogData.data);
     }
   }
@@ -70,14 +71,14 @@ export class CategoryComponent implements OnInit {
   edit(){
     var formData = this.categoryForm.value;
     var data = {
-      id: this.dialogData.id,
+      id: this.dialogData.data.id,
       name: formData.name
     }
     this.categoryService.update(data).subscribe((response: any) => {
       this.dialogRef.close();
       this.onEditCategory.emit();
       this.responseMenssage = response.message;
-      this.snackbarService.openSnackBar(this.responseMenssage, "sucess");
+      this.snackbarService.openSnackBar(this.responseMenssage, "success");
     },(error: any) => {
       this.dialogRef.close();
       if(error.error?.message){
