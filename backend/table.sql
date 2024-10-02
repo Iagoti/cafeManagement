@@ -27,6 +27,8 @@ create table product(
     primary key(id)
 );
 
+insert into product(id, name, categoryId, description, price, status) values(1, 'Teste', 1, 'Teste de Categoria', 20, true);
+
 create table bill(
      id int NOT NULL auto_increment,
      uuid varchar(200) NOT NULL,
