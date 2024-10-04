@@ -6,6 +6,8 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { ProductService } from 'src/app/services/product.service';
 import { SnackbarService } from 'src/app/services/snackbar/snackbar.service';
 import { GlobalContants } from 'src/app/shared/global-components';
+import { ProductComponent } from '../dialog/product/product.component';
+import { ConfirmationComponent } from '../dialog/confirmation/confirmation.component';
 
 @Component({
   selector: 'app-manage-product',
@@ -16,7 +18,7 @@ export class ManageProductComponent implements OnInit {
 
   displayedColumns: string[] = ['name', 'categoryName', 'description', 'price', 'edit'];
   dataSource: any;
-  responseMenssage: any;
+  responseMessage: any;
 
   constructor(
     private productService: ProductService,
@@ -37,11 +39,11 @@ export class ManageProductComponent implements OnInit {
     }, (error: any)=>{
       this.ngxService.stop();
       if(error.error?.menssage){
-        this.responseMenssage = error.error?.menssage
+        this.responseMessage = error.error?.menssage
       } else{
-        this.responseMenssage = GlobalContants.genericError;
+        this.responseMessage = GlobalContants.genericError;
       }
-      this.snackbarService.openSnackBar(this.responseMenssage, GlobalContants.error);
+      this.snackbarService.openSnackBar(this.responseMessage, GlobalContants.error);
     })
   }
 
@@ -56,15 +58,15 @@ export class ManageProductComponent implements OnInit {
       action: 'Add'
     }
     dialogConfig.width = "850px";
-    //const dialogRef = this.dialog.open(ProductComponent, dialogConfig);
+    const dialogRef = this.dialog.open(ProductComponent, dialogConfig);
     this.router.events.subscribe(() => {
-      //dialogRef.close();
+      dialogRef.close();
     });
-    // const sub = dialogRef.componentInstance.onAddCategory.subscribe(
-    //   (response) =>{
-    //     this.tableData();
-    //   }
-    // )
+    const sub = dialogRef.componentInstance.onAddProduct.subscribe(
+      (response) =>{
+        this.tableData();
+      }
+    )
   }
 
   handleEditAction(values: any){
@@ -74,21 +76,65 @@ export class ManageProductComponent implements OnInit {
       data: values
     }
     dialogConfig.width = "850px";
-    // const dialogRef = this.dialog.open(CategoryComponent, dialogConfig);
-    // this.router.events.subscribe(() => {
-    //   dialogRef.close();
-    // });
-    // const sub = dialogRef.componentInstance.onEditCategory.subscribe(
-    //   (response) =>{
-    //     this.tableData();
-    //   }
-    // )
+    const dialogRef = this.dialog.open(ProductComponent, dialogConfig);
+    this.router.events.subscribe(() => {
+      dialogRef.close();
+    });
+    const sub = dialogRef.componentInstance.onEditProduct.subscribe(
+      (response) =>{
+        this.tableData();
+      }
+    )
   }
 
-  handleDeleteAction(values: any){}
+  handleDeleteAction(values: any){
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      message: 'delete ' + values.name + ' product'
+    };
+    const dialogRef = this.dialog.open(ConfirmationComponent, dialogConfig);
+    const sub = dialogRef.componentInstance.onEmitStatusChange.subscribe((response)=>{
+      this.ngxService.start();
+      this.deleteProduct(values.id);
+      dialogRef.close();
+    })
+  }
+
+  deleteProduct(id: any){
+    this.productService.delete(id).subscribe((response: any) =>{
+      this.ngxService.stop();
+      this.tableData();
+      this.responseMessage = response?.message;
+      this.snackbarService.openSnackBar(this.responseMessage, "success");
+    }, (error: any)=>{
+      this.ngxService.stop();
+      if(error.error?.menssage){
+        this.responseMessage = error.error?.menssage
+      } else{
+        this.responseMessage = GlobalContants.genericError;
+      }
+      this.snackbarService.openSnackBar(this.responseMessage, GlobalContants.error);
+    })
+  }
 
   onChange(status: any, id: any){
-
+    var data = {
+      status:status.toString(),
+      id:id
+    }
+    this.productService.updateStatus(data).subscribe((response: any) => {
+      this.ngxService.stop();
+      this.responseMessage = response?.message;
+      this.snackbarService.openSnackBar(this.responseMessage, "success");
+    }, (error: any)=>{
+      this.ngxService.stop();
+      if(error.error?.menssage){
+        this.responseMessage = error.error?.menssage
+      } else{
+        this.responseMessage = GlobalContants.genericError;
+      }
+      this.snackbarService.openSnackBar(this.responseMessage, GlobalContants.error);
+    })
   }
 
 }
