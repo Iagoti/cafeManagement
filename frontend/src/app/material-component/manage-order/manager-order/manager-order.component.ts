@@ -35,7 +35,7 @@ export class ManagerOrderComponent implements OnInit {
 
   ngOnInit(): void {
     this.ngxService.start();
-    this.getCategory();
+    this.getCategorys();
     this.managerOrderForm = this.formBuilder.group({
       name: [null, [Validators.required, Validators.pattern(GlobalContants.nameRegex)]],
       email: [null, [Validators.required, Validators.pattern(GlobalContants.nameRegex)]],
@@ -49,7 +49,7 @@ export class ManagerOrderComponent implements OnInit {
     })
   }
 
-  getCategory() {
+  getCategorys() {
     this.categoryService.getCategorys().subscribe((response: any) => {
       this.ngxService.stop();
       this.categorys = response;
